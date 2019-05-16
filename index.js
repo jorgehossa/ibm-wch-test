@@ -3,9 +3,13 @@ const ids = [
   '0d641353-293b-4365-ba09-94f94629e559',
   '58791f28-42a5-4961-9218-4418274f1bb5',
 ];
+const data = JSON.stringify({
+  fields: ['elements'],
+  ids,
+});
 
 const reqHeader = new Headers();
-reqHeader.append('Content-Type', 'text/json');
+reqHeader.append('Content-Type', 'application/json');
 reqHeader.append('x-ibm-client-id', '5f03cf27-39e3-4fa6-a1b4-c5e1e63b3fb1');
 reqHeader.append(
   'x-ibm-client-secret',
@@ -13,8 +17,11 @@ reqHeader.append(
 );
 const initObject = {
   method: 'POST',
+  mode: 'cors',
+  credentials: 'include',
   headers: reqHeader,
+  body: data,
 };
 const url =
   'https://my7.digitalexperience.ibm.com/api/1285e1d2-5151-4eab-9da2-775291879cb9/delivery/v1/content/bulk_retrieve';
-fetch(url, initObject);
+fetch(url, initObject).then(response => console.log(response));

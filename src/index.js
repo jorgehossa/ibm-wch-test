@@ -10,10 +10,10 @@ const data = JSON.stringify({
 
 const reqHeader = new Headers();
 reqHeader.append('Content-Type', 'application/json');
-reqHeader.append('x-ibm-client-id', '5f03cf27-39e3-4fa6-a1b4-c5e1e63b3fb1');
+reqHeader.append('x-ibm-client-id', process.env.CLIENT_ID);
 reqHeader.append(
   'x-ibm-client-secret',
-  'Y4rA3eA3yT5iA3dW5pF2bR6sX4sR1kL4kS1rP4wN4rI5wK2oX4'
+  process.env.CLIENT_SECRET,
 );
 const initObject = {
   method: 'POST',

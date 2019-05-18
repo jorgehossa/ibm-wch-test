@@ -8,14 +8,14 @@ const data = JSON.stringify({
   ids,
 });
 
+const reqHeader = new Headers();
+reqHeader.append('Content-Type', 'application/json');
+reqHeader.append('x-ibm-client-secret', process.env.CLIENT_SECRET);
 const initObject = {
   method: 'POST',
-  headers: {
-    'x-ibm-client-id': process.env.CLIENT_ID,
-    'x-ibm-client-secret': process.env.CLIENT_SECRET,
-    'Content-Type': 'application/json',
-  },
   mode: 'cors',
+  credentials: 'include',
+  headers: reqHeader,
   body: data,
 };
 const url =

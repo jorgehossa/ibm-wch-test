@@ -17,4 +17,19 @@ const initObject = {
 };
 const url =
   'https://my7.digitalexperience.ibm.com/api/1285e1d2-5151-4eab-9da2-775291879cb9/delivery/v1/content/bulk_retrieve';
-fetch(url, initObject).then(response => console.log(response));
+fetch(url, initObject)
+  .then(function(response) {
+    if (response.status !== 200) {
+      console.log(
+        `Looks like there was a problem. Status Code: ${response.status}`
+      );
+      return;
+    }
+    // Examine the text in the response
+    response.json().then(function(elements) {
+      console.log('this is data:', elements);
+    });
+  })
+  .catch(function(err) {
+    console.log('Fetch Error :-S', err);
+  });

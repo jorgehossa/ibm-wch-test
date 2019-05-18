@@ -10,11 +10,8 @@ const data = JSON.stringify({
 
 const reqHeader = new Headers();
 reqHeader.append('Content-Type', 'application/json');
-reqHeader.append('x-ibm-client-secret', process.env.CLIENT_SECRET);
 const initObject = {
   method: 'POST',
-  mode: 'cors',
-  credentials: 'include',
   headers: reqHeader,
   body: data,
 };

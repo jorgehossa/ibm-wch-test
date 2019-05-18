@@ -1,0 +1,54 @@
+.loading {
+  //animation: imageLoading 0.8s infinite alternate;
+}
+.image-loaded {
+  animation: none;
+}
+
+.image--responsive {
+  max-width: 100%;
+}
+
+.page__title {
+  text-align: center;
+  width: 100vw;
+  margin: 0 auto;
+  padding: 1rem 0;
+  border-bottom: 1px solid $color__lightblue;
+  border-top: 1px solid $color__lightblue;
+}
+
+//IMAGES SECTION
+
+.cards {
+  display: grid;
+  grid-template: auto / repeat(3, 1fr);
+  grid-gap: 1rem;
+  max-width: 80vw;
+  margin: 1rem auto;
+}
+
+// BACKGROUND SECTION
+
+.section.bg {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  padding: 1rem;
+}
+
+.bg {
+  &__container {
+    width: 80vw;
+    height: 300px;
+    background-color: $color__lightblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+  }
+  &__title {
+    color: white;
+    text-shadow: rgba(0, 0, 0, 0.3) 1px 2px 3px;
+  }
+}

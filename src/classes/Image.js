@@ -5,4 +5,8 @@ export class Image {
     this.size = size;
     this.size = tag;
   }
+
+  render(request) {
+    console.log(request);
+  }
 }

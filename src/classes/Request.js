@@ -21,7 +21,6 @@ export class Request {
 
     const response = await fetch(url, initObject);
     const data = await response.json();
-    // debugger;
     return data;
   }
 }

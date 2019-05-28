@@ -23,14 +23,35 @@ images.forEach(image => {
 /* Creamos un nuevo array solo con los Id's de cada imagen */
 
 const imagesIds = imagesData.map(image => image.id);
+const chunkSize = 25;
+
+const chunkArray = (array, chunk) => {
+  const results = [];
+  while (array.length) {
+    results.push(array.splice(0, chunk));
+  }
+  return results;
+};
+
+const splitArray = chunkArray(imagesIds, chunkSize);
+
+const fullData = [];
+
+splitArray.forEach(array => {
+  const request = new Request(array);
+  async function allData() {
+    const data = await request.getImagesData();
+    fullData.push(data);
+  }
+  allData();
+});
+console.log(fullData);
 
 /* Creamos un nuevo request pasandole como parametro los Id's */
 
-const request = new Request(imagesIds);
-
 // Función para ejecutar petición y renderizar imágenes
 
-async function getData() {
+/* async function getData() {
   const data = await request.getImagesData();
   // Itereamos cada imagen
   images.forEach(image => {
@@ -93,8 +114,8 @@ async function getData() {
       }
     });
   });
-}
+} */
 
 document.addEventListener('DOMContentLoaded', () => {
-  getData();
+  // getData();
 });

@@ -81,6 +81,11 @@ async function getData() {
 
         if (image.tagName === 'IMG') {
           image.src = `${domain}${src}`;
+          image.onload = () => {
+            image.setAttribute('alt', image.dataset.alt);
+            image.setAttribute('title', image.dataset.title);
+            image.parentElement.classList.replace('loading', 'image-loaded');
+          };
         } else {
           image.style.backgroundImage = `url(${domain}${src})`;
           image.style.backgroundPosition = `center`;

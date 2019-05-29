@@ -1,30 +1,16 @@
 import './_scss/main.scss';
 
-const { Image } = require('./classes/Image');
 const { Request } = require('./classes/Request');
 
-const images = document.querySelectorAll('.wch-image');
-const imagesData = [];
-
-/* Itereamos cada elemento con la clase para tomar los datos y crear un nuevo objeto de la clase Image, y guardamos cada elemento en un nuevo array con los objetos */
-
-images.forEach(image => {
-  const imageData = new Image(
-    image.dataset.id,
-    image.dataset.imageType,
-    image.dataset.imageSize,
-    image.tagName,
-    image.dataset.alt,
-    image.dataset.title
-  );
-  imagesData.push(imageData);
-});
+const imageElements = document.querySelectorAll('.wch-image');
+const arrayImageElements = Array.prototype.slice.call(imageElements);
 
 /* Creamos un nuevo array solo con los Id's de cada imagen */
 
-const imagesIds = imagesData.map(image => image.id);
-const chunkSize = 25;
+const imagesIds = arrayImageElements.map(image => image.attributes[1].value);
+const chunkSize = 25; // Límite de elemento spor petición
 
+// Función para dividir el arreglo de Id's
 const chunkArray = (array, chunk) => {
   const results = [];
   while (array.length) {
@@ -33,89 +19,80 @@ const chunkArray = (array, chunk) => {
   return results;
 };
 
+// Dividimos el arreglo de Id's en las cantidades permitidas por la API.
 const splitArray = chunkArray(imagesIds, chunkSize);
 
-const fullData = [];
-
+// Recorremos el arreglo para realizar la petición.
 splitArray.forEach(array => {
   const request = new Request(array);
-  async function allData() {
+  async function getImages() {
     const data = await request.getImagesData();
-    fullData.push(data);
-  }
-  allData();
-});
-console.log(fullData);
+    data.forEach(media => {
+      // Recorremos cada elemento de imagen en el DOM y le asignamos el src correspondiente segun sus datos.
+      imageElements.forEach(imageTag => {
+        // Validamos que los ID coincidan y realizamos un switch segun el tipo y tamaño de la imagen
+        if (media.id === imageTag.dataset.id) {
+          const domain =
+            'https://my7.digitalexperience.ibm.com/api/1285e1d2-5151-4eab-9da2-775291879cb9';
 
-/* Creamos un nuevo request pasandole como parametro los Id's */
-
-// Función para ejecutar petición y renderizar imágenes
-
-/* async function getData() {
-  const data = await request.getImagesData();
-  // Itereamos cada imagen
-  images.forEach(image => {
-    // Iteramos en cada dato retornado
-    data.forEach(element => {
-      // Validamos si el ID de la info correcponde con el del elemento y asignamos la url
-      if (element.id === image.dataset.id) {
-        const domain =
-          'https://my7.digitalexperience.ibm.com/api/1285e1d2-5151-4eab-9da2-775291879cb9';
-
-        let src;
-        if (image.dataset.imageType === 'r') {
-          switch (image.dataset.imageSize) {
-            case 's':
-              src = element.elements.images.values[0].renditions.small_r.source;
-              break;
-            case 'm':
-              src =
-                element.elements.images.values[0].renditions.medium_r.source;
-              break;
-            case 'l':
-              src = element.elements.images.values[0].renditions.large_r.source;
-              break;
-            default:
-              src = element.elements.images.values[0].renditions.default.source;
-              break;
+          let src;
+          // Validación de imágenes rectangulares
+          if (imageTag.dataset.imageType === 'r') {
+            switch (imageTag.dataset.imageSize) {
+              case 's':
+                src = media.elements.images.values[0].renditions.small_r.source;
+                break;
+              case 'm':
+                src =
+                  media.elements.images.values[0].renditions.medium_r.source;
+                break;
+              case 'l':
+                src = media.elements.images.values[0].renditions.large_r.source;
+                break;
+              default:
+                src = media.elements.images.values[0].renditions.default.source;
+                break;
+            }
+          }
+          // Validación de imágenes cuadradas
+          if (imageTag.dataset.imageType === 'c') {
+            switch (imageTag.dataset.imageSize) {
+              case 's':
+                src = media.elements.images.values[0].renditions.small_c.source;
+                break;
+              case 'm':
+                src =
+                  media.elements.images.values[0].renditions.medium_c.source;
+                break;
+              case 'l':
+                src = media.elements.images.values[0].renditions.long_c.source;
+                break;
+              default:
+                src = media.elements.images.values[0].renditions.default.source;
+                break;
+            }
+          } else {
+            src = media.elements.images.values[0].renditions.default.source;
+          }
+          // Validamos el tipo de elemento y le asignamos los atributos necesarios
+          if (imageTag.tagName === 'IMG') {
+            imageTag.src = `${domain}${src}`;
+            imageTag.onload = () => {
+              imageTag.setAttribute('alt', imageTag.dataset.alt);
+              imageTag.setAttribute('title', imageTag.dataset.title);
+              imageTag.parentElement.classList.replace(
+                'loading',
+                'image-loaded'
+              );
+            };
+          } else {
+            imageTag.style.backgroundImage = `url(${domain}${src})`;
+            imageTag.style.backgroundPosition = `center`;
           }
         }
-        if (image.dataset.imageType === 'c') {
-          switch (image.dataset.imageSize) {
-            case 's':
-              src = element.elements.images.values[0].renditions.small_c.source;
-              break;
-            case 'm':
-              src =
-                element.elements.images.values[0].renditions.medium_c.source;
-              break;
-            case 'l':
-              src = element.elements.images.values[0].renditions.long_c.source;
-              break;
-            default:
-              src = element.elements.images.values[0].renditions.default.source;
-              break;
-          }
-        } else {
-          src = element.elements.images.values[0].renditions.default.source;
-        }
-
-        if (image.tagName === 'IMG') {
-          image.src = `${domain}${src}`;
-          image.onload = () => {
-            image.setAttribute('alt', image.dataset.alt);
-            image.setAttribute('title', image.dataset.title);
-            image.parentElement.classList.replace('loading', 'image-loaded');
-          };
-        } else {
-          image.style.backgroundImage = `url(${domain}${src})`;
-          image.style.backgroundPosition = `center`;
-        }
-      }
+      });
     });
-  });
-} */
-
-document.addEventListener('DOMContentLoaded', () => {
-  // getData();
+  }
+  // Llamamos la función
+  getImages();
 });

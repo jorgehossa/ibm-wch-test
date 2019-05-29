@@ -20,7 +20,8 @@ export class Request {
         'https://my7.digitalexperience.ibm.com/api/1285e1d2-5151-4eab-9da2-775291879cb9/delivery/v1/content/bulk_retrieve';
       const response = await fetch(url, initObject);
       const data = await response.json();
-      return data;
+      return Array.prototype.slice.call(data);
+      // return data;
     } catch (err) {
       console.log(err);
     }

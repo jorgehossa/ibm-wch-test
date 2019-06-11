@@ -1,4 +1,11 @@
 import './_scss/main.scss';
+import lazySizes from 'lazysizes';
+// other imports ...
+import 'lazysizes/plugins/respimg/ls.respimg';
+import 'lazysizes/plugins/optimumx/ls.optimumx';
+
+lazySizes.cfg.lazyClass = 'lazyload';
+lazySizes.cfg.loadMode = 1;
 
 const { Request } = require('./classes/Request');
 
@@ -76,7 +83,9 @@ splitArray.forEach(array => {
           }
           // Validamos el tipo de elemento y le asignamos los atributos necesarios
           if (imageTag.tagName === 'IMG') {
-            imageTag.src = `${domain}${src}`;
+            // imageTag.src = `${domain}${src}`;
+            imageTag.dataset.src = `${domain}${src}`;
+            imageTag.classList.add('lazyload');
             imageTag.onload = () => {
               imageTag.setAttribute('alt', imageTag.dataset.alt);
               imageTag.setAttribute('title', imageTag.dataset.title);
@@ -95,4 +104,5 @@ splitArray.forEach(array => {
   }
   // Llamamos la función
   getImages();
+  lazySizes.init();
 });

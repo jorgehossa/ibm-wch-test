@@ -74,11 +74,9 @@ splitArray.forEach(array => {
           // Validamos el tipo de elemento y le asignamos los atributos necesarios
           if (imageTag.tagName === 'IMG') {
             imageTag.src = `${domain}${src}`;
-            if (imageTag.complete) {
-              imageTag.setAttribute('alt', imageTag.dataset.alt);
-              imageTag.setAttribute('title', imageTag.dataset.title);
-              imageTag.parentElement.classList.replace('loading', 'image-loaded');
-            }
+            imageTag.setAttribute('alt', imageTag.dataset.alt);
+            imageTag.setAttribute('title', imageTag.dataset.title);
+            imageTag.parentElement.classList.replace('loading', 'image-loaded');
             /* imageTag.onload = () => {
               imageTag.setAttribute('alt', imageTag.dataset.alt);
               imageTag.setAttribute('title', imageTag.dataset.title);

@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import './_scss/main.scss';
 
 const { Request } = require('./classes/Request');

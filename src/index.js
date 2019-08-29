@@ -32,8 +32,7 @@ splitArray.forEach(array => {
       imageElements.forEach(imageTag => {
         // Validamos que los ID coincidan y realizamos un switch segun el tipo y tamaño de la imagen
         if (media.id === imageTag.dataset.id) {
-          const domain =
-            'https://my7.digitalexperience.ibm.com/api/1285e1d2-5151-4eab-9da2-775291879cb9';
+          const domain = 'https://my7.digitalexperience.ibm.com/api/1285e1d2-5151-4eab-9da2-775291879cb9';
 
           let src;
           // Validación de imágenes rectangulares
@@ -43,8 +42,7 @@ splitArray.forEach(array => {
                 src = media.elements.images.values[0].renditions.small_r.source;
                 break;
               case 'm':
-                src =
-                  media.elements.images.values[0].renditions.medium_r.source;
+                src = media.elements.images.values[0].renditions.medium_r.source;
                 break;
               case 'l':
                 src = media.elements.images.values[0].renditions.large_r.source;
@@ -55,14 +53,13 @@ splitArray.forEach(array => {
             }
           }
           // Validación de imágenes cuadradas
-          if (imageTag.dataset.imageType === 'c') {
+          else if (imageTag.dataset.imageType === 'c') {
             switch (imageTag.dataset.imageSize) {
               case 's':
                 src = media.elements.images.values[0].renditions.small_c.source;
                 break;
               case 'm':
-                src =
-                  media.elements.images.values[0].renditions.medium_c.source;
+                src = media.elements.images.values[0].renditions.medium_c.source;
                 break;
               case 'l':
                 src = media.elements.images.values[0].renditions.long_c.source;
@@ -77,14 +74,19 @@ splitArray.forEach(array => {
           // Validamos el tipo de elemento y le asignamos los atributos necesarios
           if (imageTag.tagName === 'IMG') {
             imageTag.src = `${domain}${src}`;
-            imageTag.onload = () => {
+            if (imageTag.complete) {
+              imageTag.setAttribute('alt', imageTag.dataset.alt);
+              imageTag.setAttribute('title', imageTag.dataset.title);
+              imageTag.parentElement.classList.replace('loading', 'image-loaded');
+            }
+            /* imageTag.onload = () => {
               imageTag.setAttribute('alt', imageTag.dataset.alt);
               imageTag.setAttribute('title', imageTag.dataset.title);
               imageTag.parentElement.classList.replace(
                 'loading',
                 'image-loaded'
               );
-            };
+            }; */
           } else {
             imageTag.style.backgroundImage = `url(${domain}${src})`;
             imageTag.style.backgroundPosition = `center`;

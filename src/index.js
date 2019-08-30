@@ -72,7 +72,6 @@ splitArray.forEach(array => {
           } else {
             src = media.elements.images.values[0].renditions.default.source;
           }
-          debugger;
           // Validamos el tipo de elemento y le asignamos los atributos necesarios
           if (imageTag.tagName === 'IMG') {
             imageTag.src = `${domain}${src}`;

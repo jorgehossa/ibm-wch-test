@@ -83,8 +83,6 @@ splitArray.forEach(array => {
             imageTag.addEventListener('load', () => {
               imageTag.setAttribute('alt', imageTag.dataset.alt);
               imageTag.setAttribute('title', imageTag.dataset.title);
-              imageTag.parentElement.classList -= 'loading';
-              imageTag.parentElement.classList += 'image-loaded';
             });
           } else {
             imageTag.style.backgroundImage = `url(${domain}${src})`;

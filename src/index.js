@@ -15,10 +15,9 @@ const imageIdsPackage = ChunkArray(imagesNodesIds, chunkSize);
 
 // Recorremos el arreglo para realizar la petición.
 imageIdsPackage.forEach(idsPackage => {
-  const result = WCHRequest(idsPackage);
-  result.then(value => console.log(value));
-
   const request = new Request(idsPackage);
+  const solicitud = WCHRequest(idsPackage);
+  debugger;
   async function getImages() {
     const data = await request.getImagesData();
     data.forEach(media => {

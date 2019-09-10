@@ -22,13 +22,15 @@
     "url": "https://github.com/jorgehossa/ibm-wch-test/issues"
   },
   "homepage": "https://github.com/jorgehossa/ibm-wch-test#readme",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "autoprefixer": "^9.5.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.3.1",
-    "autoprefixer": "^9.5.1",
     "babel-loader": "^8.0.5",
-    "babel-polyfill": "^6.26.0",
     "css-loader": "^2.1.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",

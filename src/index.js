@@ -80,9 +80,12 @@ splitArray.forEach(array => {
           // Validamos el tipo de elemento y le asignamos los atributos necesarios
           if (imageTag.tagName === 'IMG') {
             imageTag.src = `${domain}${src}`;
-            imageTag.setAttribute('alt', imageTag.dataset.alt);
-            imageTag.setAttribute('title', imageTag.dataset.title);
-            imageTag.parentElement.classList.replace('loading', 'image-loaded');
+            imageTag.addEventListener('load', () => {
+              imageTag.setAttribute('alt', imageTag.dataset.alt);
+              imageTag.setAttribute('title', imageTag.dataset.title);
+              imageTag.parentElement.classList -= 'loading';
+              imageTag.parentElement.classList += 'image-loaded';
+            });
           } else {
             imageTag.style.backgroundImage = `url(${domain}${src})`;
             imageTag.style.backgroundPosition = `center`;

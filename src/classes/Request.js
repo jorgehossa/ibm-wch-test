@@ -9,8 +9,9 @@ export class Request {
         fields: ['id', 'elements'],
         ids: this.ids,
       });
-      const reqHeader = new Headers();
-      reqHeader.append('Content-Type', 'application/json');
+      const reqHeader = {
+        'Content-Type': 'application/json',
+      };
       const initObject = {
         method: 'POST',
         headers: reqHeader,

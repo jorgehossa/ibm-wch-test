@@ -1,3 +1,5 @@
+import 'whatwg-fetch';
+
 export class Request {
   constructor(ids) {
     this.ids = ids;

@@ -43,8 +43,9 @@
     "webpack-dev-server": "^3.4.1"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.2.5",
     "autoprefixer": "^9.5.1",
     "lazysizes": "^5.0.0",
-    "@babel/polyfill": "^7.2.5"
+    "whatwg-fetch": "^3.0.0"
   }
 }

@@ -1,4 +1,5 @@
 import '@babel/polyfill';
+import 'nodelist-foreach-polyfill';
 import './_scss/main.scss';
 
 const { Request } = require('./classes/Request');

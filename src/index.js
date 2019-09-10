@@ -13,11 +13,19 @@ const chunkSize = 25; // Límite de elemento spor petición
 // Dividimos el arreglo de Id's en las cantidades permitidas por la API.(25 en este caso)
 const imageIdsPackage = ChunkArray(imagesNodesIds, chunkSize);
 
+const getImageData = array => {
+  for (let i = 0; i < array.length; i += 1) {
+    const dataIds = WCHRequest(array);
+    return dataIds;
+  }
+};
+
+const imageData = getImageData(imageIdsPackage);
+debugger;
+
 // Recorremos el arreglo para realizar la petición.
 imageIdsPackage.forEach(idsPackage => {
   const request = new Request(idsPackage);
-  const solicitud = WCHRequest(idsPackage);
-  debugger;
   async function getImages() {
     const data = await request.getImagesData();
     data.forEach(media => {

@@ -112,7 +112,6 @@ function getImageData(array) {
   for (let i = 0; i < array.length; i += 1) {
     const element = array[i];
     const resultados = WCHRequest(element);
-    return resultados;
   }
 }
 /* END FUNCTIONS DECLARATION */

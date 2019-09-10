@@ -28,12 +28,14 @@ splitArray.forEach(array => {
   const request = new Request(array);
   async function getImages() {
     const data = await request.getImagesData();
+    console.log(data);
     data.forEach(media => {
       // Recorremos cada elemento de imagen en el DOM y le asignamos el src correspondiente segun sus datos.
       imageElements.forEach(imageTag => {
         // Validamos que los ID coincidan y realizamos un switch segun el tipo y tamaño de la imagen
         if (media.id === imageTag.dataset.id) {
-          const domain = 'https://my7.digitalexperience.ibm.com/api/1285e1d2-5151-4eab-9da2-775291879cb9';
+          const domain =
+            'https://my7.digitalexperience.ibm.com/api/1285e1d2-5151-4eab-9da2-775291879cb9';
 
           let src;
           // Validación de imágenes rectangulares
@@ -43,7 +45,8 @@ splitArray.forEach(array => {
                 src = media.elements.images.values[0].renditions.small_r.source;
                 break;
               case 'm':
-                src = media.elements.images.values[0].renditions.medium_r.source;
+                src =
+                  media.elements.images.values[0].renditions.medium_r.source;
                 break;
               case 'l':
                 src = media.elements.images.values[0].renditions.large_r.source;
@@ -60,7 +63,8 @@ splitArray.forEach(array => {
                 src = media.elements.images.values[0].renditions.small_c.source;
                 break;
               case 'm':
-                src = media.elements.images.values[0].renditions.medium_c.source;
+                src =
+                  media.elements.images.values[0].renditions.medium_c.source;
                 break;
               case 'l':
                 src = media.elements.images.values[0].renditions.long_c.source;

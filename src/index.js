@@ -1,35 +1,29 @@
 import './_scss/main.scss';
+import { WCHRequest } from './functions/WCHRequest';
+import { ChunkArray } from './functions/ChunkArray';
 
 const { Request } = require('./classes/Request');
-
-const imageElements = document.querySelectorAll('.wch-image');
-const arrayImageElements = Array.prototype.slice.call(imageElements);
-
-/* Creamos un nuevo array solo con los Id's de cada imagen */
-
-const imagesIds = arrayImageElements.map(image => image.attributes[1].value);
+// Capturamos todos los elementos que tengan la clase asignada
+const imageNodes = document.querySelectorAll('.wch-image');
+// Convertimos todo el objeto de elementos en un array
+const imageNodesToArray = Object.values(imageNodes);
+// Creamos un nuevo array solo con los Id's de cada imagen
+const imagesNodesIds = imageNodesToArray.map(image => image.dataset.id);
 const chunkSize = 25; // Límite de elemento spor petición
-
-// Función para dividir el arreglo de Id's
-const chunkArray = (array, chunk) => {
-  const results = [];
-  while (array.length) {
-    results.push(array.splice(0, chunk));
-  }
-  return results;
-};
-
-// Dividimos el arreglo de Id's en las cantidades permitidas por la API.
-const splitArray = chunkArray(imagesIds, chunkSize);
+// Dividimos el arreglo de Id's en las cantidades permitidas por la API.(25 en este caso)
+const imageIdsPackage = ChunkArray(imagesNodesIds, chunkSize);
 
 // Recorremos el arreglo para realizar la petición.
-splitArray.forEach(array => {
-  const request = new Request(array);
+imageIdsPackage.forEach(idsPackage => {
+  const result = WCHRequest(idsPackage);
+  result.then(value => console.log(value));
+
+  const request = new Request(idsPackage);
   async function getImages() {
     const data = await request.getImagesData();
     data.forEach(media => {
       // Recorremos cada elemento de imagen en el DOM y le asignamos el src correspondiente segun sus datos.
-      imageElements.forEach(imageTag => {
+      imageNodes.forEach(imageTag => {
         // Validamos que los ID coincidan y realizamos un switch segun el tipo y tamaño de la imagen
         if (media.id === imageTag.dataset.id) {
           const domain =
@@ -55,7 +49,7 @@ splitArray.forEach(array => {
             }
           }
           // Validación de imágenes cuadradas
-          if (imageTag.dataset.imageType === 'c') {
+          else if (imageTag.dataset.imageType === 'c') {
             switch (imageTag.dataset.imageSize) {
               case 's':
                 src = media.elements.images.values[0].renditions.small_c.source;

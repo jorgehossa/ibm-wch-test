@@ -25,12 +25,9 @@ function WCHRequest(idsPackage) {
       // Recorremos cada resultado
       for (let dataIndex = 0; dataIndex < responseData.length; dataIndex += 1) {
         const dataElement = responseData[dataIndex];
-        const imageDomain =
-          'https://my7.digitalexperience.ibm.com/api/1285e1d2-5151-4eab-9da2-775291879cb9';
+        const imageDomain = 'https://my7.digitalexperience.ibm.com';
         let src;
-        /* console.log(
-          dataElement.elements.images.values[0].renditions.default.url
-        ); */
+
         // Recorremos array de nodos
         for (let nodeIndex = 0; nodeIndex < imageNodes.length; nodeIndex += 1) {
           const imageNode = imageNodes[nodeIndex];
@@ -42,22 +39,22 @@ function WCHRequest(idsPackage) {
                 case 's':
                   src =
                     dataElement.elements.images.values[0].renditions.small_r
-                      .source;
+                      .url;
                   break;
                 case 'm':
                   src =
                     dataElement.elements.images.values[0].renditions.medium_r
-                      .source;
+                      .url;
                   break;
                 case 'l':
                   src =
                     dataElement.elements.images.values[0].renditions.large_r
-                      .source;
+                      .url;
                   break;
                 default:
                   src =
                     dataElement.elements.images.values[0].renditions.default
-                      .source;
+                      .url;
                   break;
               }
             } else if (imageNode.dataset.imageType === 'c') {
@@ -65,27 +62,26 @@ function WCHRequest(idsPackage) {
                 case 's':
                   src =
                     dataElement.elements.images.values[0].renditions.small_c
-                      .source;
+                      .url;
                   break;
                 case 'm':
                   src =
                     dataElement.elements.images.values[0].renditions.medium_c
-                      .source;
+                      .url;
                   break;
                 case 'l':
                   src =
-                    dataElement.elements.images.values[0].renditions.long_c
-                      .source;
+                    dataElement.elements.images.values[0].renditions.long_c.url;
                   break;
                 default:
                   src =
                     dataElement.elements.images.values[0].renditions.default
-                      .source;
+                      .url;
                   break;
               }
             } else {
               src =
-                dataElement.elements.images.values[0].renditions.default.source;
+                dataElement.elements.images.values[0].renditions.default.url;
             }
             // Comparamos si el elemento es IMG o DIV
             if (imageNode.tagName === 'IMG') {
@@ -128,7 +124,15 @@ for (let nodeIndex = 0; nodeIndex < imageNodes.length; nodeIndex += 1) {
   imageNodesToArray.push(element);
 }
 // Creamos un nuevo array solo con los Id's de cada imagen
-const imagesNodesIds = imageNodesToArray.map(image => image.dataset.id);
+const imagesNodesIds = [];
+for (
+  let nodeIdIndex = 0;
+  nodeIdIndex < imageNodesToArray.length;
+  nodeIdIndex += 1
+) {
+  const idElement = imageNodesToArray[nodeIdIndex].dataset.id;
+  imagesNodesIds.push(idElement);
+}
 const chunkSize = 25; // Límite de elemento spor petición
 // Dividimos el arreglo de Id's en las cantidades permitidas por la API.(25 en este caso)
 const imageIdsPackage = ChunkArray(imagesNodesIds, chunkSize);

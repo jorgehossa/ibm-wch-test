@@ -21,11 +21,17 @@
 //IMAGES SECTION
 
 .cards {
-  display: grid;
-  grid-template: auto / repeat(3, 1fr);
-  grid-gap: 1rem;
+  // display: grid;
+  // grid-template: auto / repeat(3, 1fr);
+  // grid-gap: 1rem;
+  display: flex;
+  flex: 1;
   max-width: 80vw;
   margin: 1rem auto;
+  flex-wrap: wrap;
+}
+.card{
+  flex: 1 33.33%;
 }
 
 // BACKGROUND SECTION

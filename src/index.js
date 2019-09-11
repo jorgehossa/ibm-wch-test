@@ -95,7 +95,9 @@ function WCHRequest(idsPackage) {
                 imageNode.title = imageNode.dataset.title;
               });
             } else {
-              imageNode.style.backgroundImage = `url(${imageDomain}${src})`;
+              imageNode.style.backgroundImage =
+                // eslint-disable-next-line prefer-template
+                'url(' + imageDomain + src + ')';
               imageNode.style.backgroundSize = 'cover';
             }
           }

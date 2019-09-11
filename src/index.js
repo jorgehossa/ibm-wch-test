@@ -121,7 +121,12 @@ function getImageData(array) {
 // Capturamos todos los elementos que tengan la clase asignada
 const imageNodes = document.getElementsByClassName('wch-image');
 // Convertimos todo el objeto de elementos en un array
-const imageNodesToArray = Array.prototype.slice.call(imageNodes);
+// const imageNodesToArray = Array.prototype.slice.call(imageNodes);
+const imageNodesToArray = [];
+for (let nodeIndex = 0; nodeIndex < imageNodes.length; nodeIndex += 1) {
+  const element = imageNodes[nodeIndex];
+  imageNodesToArray.push(element);
+}
 // Creamos un nuevo array solo con los Id's de cada imagen
 const imagesNodesIds = imageNodesToArray.map(image => image.dataset.id);
 const chunkSize = 25; // Límite de elemento spor petición

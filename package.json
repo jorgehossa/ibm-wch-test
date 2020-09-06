@@ -47,7 +47,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "autoprefixer": "^9.5.1",
-    "lazysizes": "^5.0.0",
+    "lazysizes": "^5.2.1",
     "nodelist-foreach-polyfill": "^1.2.0",
     "whatwg-fetch": "^3.0.0"
   },
